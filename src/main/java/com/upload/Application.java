@@ -17,6 +17,9 @@ public class Application {
     @Value("${maxPostSize}")
     private Integer maxPostSize;
 
+    @Value("${maxSavePostSize}")
+    private Integer maxSavePostSize;
+
     @Bean
     public EmbeddedServletContainerFactory servletContainerFactory() {
         TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
@@ -25,6 +28,7 @@ public class Application {
                 ((AbstractProtocol) connector.getProtocolHandler()).setConnectionTimeout(120000);
                 // 设置最大上传100M
                 connector.setMaxPostSize(maxPostSize);
+                connector.setMaxSavePostSize(maxSavePostSize);
         });
 
         // configure some more properties
