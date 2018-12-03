@@ -1,14 +1,8 @@
-package com.upload;/*
- * TOP SECRET
- * Copyright 2006-2015 Transsion.com All right reserved. This software is the
- * confidential and proprietary information of Transsion.com ("Confidential
- * Information"). You shall not disclose such Confidential Information and shall
- * use it only in accordance with the terms of the license agreement you entered
- * into with Transsion.com.
- */
+package com.upload;
 
 import com.upload.config.WebConfig;
 import org.apache.coyote.AbstractProtocol;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
@@ -16,16 +10,22 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 
-@SpringBootApplication // same as @Configuration @EnableAutoConfiguration @ComponentScan
+@SpringBootApplication
 @Import(WebConfig.class)
 public class Application {
+
+    @Value("${maxPostSize}")
+    private Integer maxPostSize;
 
     @Bean
     public EmbeddedServletContainerFactory servletContainerFactory() {
         TomcatEmbeddedServletContainerFactory factory = new TomcatEmbeddedServletContainerFactory();
 
-        factory.addConnectorCustomizers(connector ->
-                ((AbstractProtocol) connector.getProtocolHandler()).setConnectionTimeout(120000));
+        factory.addConnectorCustomizers(connector -> {
+                ((AbstractProtocol) connector.getProtocolHandler()).setConnectionTimeout(120000);
+                // 设置最大上传100M
+                connector.setMaxPostSize(maxPostSize);
+        });
 
         // configure some more properties
 
