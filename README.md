@@ -1,4 +1,4 @@
-wget "https://github.com/jialechan/common-upload-server/releases/download/0.0.1/common-upload-server.jar"   
+wget "https://github.com/jialechan/common-upload-server/releases/download/1.0.0/common-upload-server.jar"
 
 ```shell
 # 设置最大上传100M
