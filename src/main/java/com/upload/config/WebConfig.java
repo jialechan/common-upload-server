@@ -18,16 +18,6 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Resource
     private UrlLogInterceptor urlLogInterceptor;
 
-    @Bean
-    public ViewResolver viewResolver() {
-        FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
-        resolver.setCache(false);
-        resolver.setPrefix("");
-        resolver.setSuffix(".html");
-        resolver.setContentType("text/html; charset=UTF-8");
-        return resolver;
-    }
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(urlLogInterceptor).addPathPatterns("/**");
